@@ -6,24 +6,34 @@
 #-------------------------------------
 #Init
 #-------------------------------------
+OG_HNN=False
+
+
+## Original HNN
 from neuron import h
 h.nrn_load_dll('C:\\Users\\ckohl\\Miniconda3\\Lib\\site-packages\\hnn_core\\nrnmech.dll')
 import os.path as op
-import hnn_core
-from hnn_core import simulate_dipole, Params, Network, read_params
+if OG_HNN==True:
+    #import hnn_core
+    from hnn_core import simulate_dipole, Params, Network, read_params
+else:
+    #import hnn_core_ca
+    from hnn_core_ca import simulate_dipole, Params, Network, read_params
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 import sys        
-sys.path.append('C:\\Users\\ckohl\\Documents\\HNN core code\\')
+#sys.path.append('C:\\Users\\ckohl\\Documents\\HNN core code\\')
+sys.path.append('C:\\Users\\ckohl\\Documents\\git-AEP_core\\')
 import my_hnn_core_functions as m
 from pptx import Presentation #https://python-pptx.readthedocs.io/en/latest/user/quickstart.html
 from pptx.util import Inches
 
 saving_dpl=False
-hnn_core_root = op.join(op.dirname(hnn_core.__file__), '..')
 my_param_out_dir='C:\\Users\\ckohl\\hnn_out\\'
 dump_dir="C:\\Users\\ckohl\\Desktop\\Current\\HNN Core\\"     
+
+
 
 
 #-------------------------------------
@@ -38,7 +48,7 @@ title_slide_layout = prs.slide_layouts[0]
 slide = prs.slides.add_slide(title_slide_layout)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
-title.text = "FastvSlow new"
+title.text = "New GABA test"
 subtitle.text = "hnn_core_loop.py"
 
 
@@ -46,14 +56,8 @@ subtitle.text = "hnn_core_loop.py"
 #-------------------------------------
 #Read base params and define params oi
 #-------------------------------------
-param_name='from_here_10_opt_adjusted'
-param_name='NEW_manual10_opt_temp5_opt3'
-param_name='best_new_0114'
-param_name='Law_best_2401'
-param_name='Law_best_2401_opt10'
-param_name='NEW_manual7_opt10trials'
-param_name='blake_aep_300_scale'
-param_name='710_tiinascale_opt_pdp'
+param_name='best_new_aep_r_contra'
+
 dict_param=m.get_dict_param(my_param_out_dir,param_name)
 param_oi=['gbar_L2Basket_L2Pyr_gabaa','gbar_L2Basket_L2Pyr_gabab','gbar_L2Basket_L5Pyr','gbar_L5Basket_L5Pyr_gabaa','gbar_L5Basket_L5Pyr_gabab','gbar_L2Basket_L2Basket','gbar_L5Basket_L5Basket']
 origin_layer=['L2', 'L2', 'L2', 'L5','L5','L2','L5']
@@ -87,6 +91,7 @@ title = slide.shapes.title
 subtitle = slide.placeholders[1]
 title.text = "TestEach new base: newtiina"
 subtitle.text = "hnn_core_loop.py"
+data='C:\\Users\\ckohl\\Documents\\SourcePlay\\NewTiina\\Adult_Tone-L Hemi-r.txt'
 for v in var_by:
     base_params=[]
     these_params=[]
@@ -99,6 +104,8 @@ for v in var_by:
         these_params[param_oi[p]]=base_params[param_oi[p]]*(1-v)
     net = Network(these_params)
     dpls = simulate_dipole(net, n_jobs=1, n_trials=1)
+    # name='All - '+str(v*100)+'%'
+    # m.core_output_basic(dpls,net,name,data,0,0,1,param_oi,base_params)   
     m.plot_hnn_core_output(dpls,net,'All - '+str(v*100)+'%',False,False,True,param_oi,these_params,base_params)
     plt.pause(.1)
     plt.savefig(dump_dir+'\\temp.png')
@@ -109,7 +116,8 @@ for v in var_by:
     plt.close()
     print(p)
     print(v)
-prs.save(dump_dir+'\\newtiina_test_all.pptx')
+prs.save(dump_dir+'\\newtiina_test_all1.pptx')
+
 #-------------------------------------
 #Vary each parameter separately
 #-------------------------------------
@@ -142,7 +150,7 @@ for p in param_oi:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_test_each.pptx')
+prs.save(dump_dir+'\\newtiina_test_each1.pptx')
 
 
 
@@ -181,7 +189,7 @@ for speed_i in Speed:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_fastvsslow.pptx')
+prs.save(dump_dir+'\\newtiina_fastvsslow1.pptx')
 
 
 #-------------------------------------
@@ -218,7 +226,7 @@ for conn_i in Connection:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_IE_II.pptx')
+prs.save(dump_dir+'\\newtiina_IE_II1.pptx')
 
 
 
@@ -257,7 +265,7 @@ for morph_i in Destination_Moprh:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_morph.pptx')
+prs.save(dump_dir+'\\newtiina_morph1.pptx')
 
 
 
@@ -295,7 +303,7 @@ for or_i in Or_Layer:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_originlayer.pptx')
+prs.save(dump_dir+'\\newtiina_originlayer1.pptx')
 
 
 
@@ -333,7 +341,7 @@ for dest_i in Dest_Layer:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiina_destinationlayer.pptx')
+prs.save(dump_dir+'\\newtiina_destinationlayer1.pptx')
 
 
 
@@ -370,7 +378,7 @@ for p in param_oi:
         plt.close()
         print(p)
         print(v)
-prs.save(dump_dir+'\\newtiinatest_each_increasehigh.pptx')
+prs.save(dump_dir+'\\newtiinatest_each_increasehigh1.pptx')
 
 # #save
 # if saving_dpl==True:
