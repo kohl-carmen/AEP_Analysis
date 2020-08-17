@@ -103,8 +103,6 @@ def plot_hnn_core_output(dpls,net,name,kid,input_table,gaba_table,*args):
     for dpl in dpls:
         keep_for_mean[trial,:]=dpl.dpl['agg']
         trial=trial+1
-    ax1.plot(dpl.t,np.mean(keep_for_mean,0),color='k',linewidth=3)
-    ax1.plot(data_time,data,color='purple',linewidth=3)
     if kid==True:
         ax1.plot(data_time,data_kid,color='blue',linewidth=3)
     ax1.title.set_text('Simulation')
@@ -112,6 +110,8 @@ def plot_hnn_core_output(dpls,net,name,kid,input_table,gaba_table,*args):
     ax1.legend(('Model','Data'))
     for dpl in dpls:
         ax1.plot(dpl.t,dpl.dpl['agg'],color=[.5, .5, .5],linewidth=1)
+    ax1.plot(dpl.t,np.mean(keep_for_mean,0),color='k',linewidth=3)
+    ax1.plot(data_time,data,color='purple',linewidth=3)
     y_range=ax1.get_ylim()
     y_range=list(y_range)
     #--------------------
