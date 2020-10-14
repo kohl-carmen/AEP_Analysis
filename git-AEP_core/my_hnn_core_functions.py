@@ -494,13 +494,14 @@ def core_output_basic(dpls,net,name,data,compare,input_table,paramoitable,*args)
         ax1.plot(dpl.times,dpl.data['agg'],color=[.5, .5, .5],linewidth=1)
         keep_for_mean[trial,:]=dpl.data['agg']
         trial=trial+1
-    ax1.plot(dpl.times,np.mean(keep_for_mean,0),color='k',linewidth=3)
+    ax1.plot(dpl.times,np.mean(keep_for_mean,0),color='k',linewidth=3, label='Model')
     if data_bool==True:
-        ax1.plot(data_time,data,color='purple',linewidth=3)
-        #ax1.plot(data_time,data2,color='blue',linewidth=3)
+        ax1.plot(data_time,data,color='purple',linewidth=3,label='Data')
+    #ax1.plot(data_time,data2,color='blue',linewidth=3)
+    ax1.legend()
     ax1.title.set_text('Simulation')
     ax1.set_xlim((0,xlim))
-    ax1.legend(('Model','Data'))
+
     #ax1.legend(('Model','Contra','Ipsi'))
 
     y_range=ax1.get_ylim()
