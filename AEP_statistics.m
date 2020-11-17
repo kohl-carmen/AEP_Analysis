@@ -1631,3 +1631,93 @@ for hemi=1:length(Hemi)
     xlim([0 200])
 end
 legend(line,{'Hemi r', 'Hemi l'})
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ANOVA: tone x hemi x peak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Test={'Amp','Lat'}
+test=2
+Peaks={'P1','N1','P2'};
+
+
+Peak_avg=1 %if true, take avg of window around peak
+avg_window=10;
+
+Partic=1:10;
+Tone_side={'RE','LE'};
+Hemi={'rig','lef'};
+Categ={'contra','ipsi'};
+time=linspace(-201.000005, 793.699980,207);
+peak_windows=[35 75;80 120; 130 210];
+
+%for ANOVA   
+within1=categorical([1 1 0 0 1 1 0 0 1 1 0 0])';
+within2=categorical([1 0 1 0 1 0 1 0 1 0 1 0])';
+within3=categorical([0 0 0 0 1 1 1 1 2 2 2 2])';
+within=table(within1,within2,within3,'variablenames',{'Tone','Hemi','Peak'});
+
+
+data=[];
+count=0;
+for peak=1:length(Peaks)
+    for tone_categ=1:length(Categ)
+        for hemi=1:length(Hemi)
+            if hemi==1%right hemi
+                if tone_categ==1%contra
+                    tone_side=2;%left tone
+                else%ipsi
+                    tone_side=1;%right
+                end
+            else%left hemi
+                 if tone_categ==1%contra
+                    tone_side=1;
+                else%ipsi
+                    tone_side=2;
+                 end
+            end
+            count=count+1;       
+            for partic=1:length(Partic)
+                    % detect peak: P1
+                    dataoi=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi}).*(-1);
+                    timeoi=time>peak_windows(peak,1) & time<=peak_windows(peak,2);
+                    if peak==2
+                        [peak_amp,peak_i]=min(dataoi(timeoi));
+                        if Peak_avg
+                            peak_amp=mean(dataoi(peak_i+min(find(timeoi==1))-1-avg_window:peak_i+min(find(timeoi==1))-1+avg_window));
+                        end
+                    else
+                        [peak_amp,peak_i]=max(dataoi(timeoi));
+                    end
+                    peak_lat=time(timeoi);
+                    peak_lat=peak_lat(peak_i);
+    %                 %plot
+    %                 figure
+    %                 plot(time,dataoi,'k')
+    %                 hold on
+    %                 plot(time(timeoi),dataoi(timeoi),'k','Linewidth',2)
+    %                 plot(peak_lat,peak_amp,'ro','Linewidth',2)
+                    if test==1%amp
+                        data(partic,count)=peak_amp;
+                    else
+                        data(partic,count)=peak_lat;
+                    end
+            end
+        end
+    end
+end
+keep_test_data=data;
+tab=array2table(data,'variablenames',{'Contra_hr_P1' 'Contra_hl_P1' 'Ipsi_hr_P1' 'Ipsi_hl_P1','Contra_hr_N1' 'Contra_hl_N1' 'Ipsi_hr_N1' 'Ipsi_hl_N1','Contra_hr_P2' 'Contra_hl_P2' 'Ipsi_hr_P2' 'Ipsi_hl_P2'});
+rm=fitrm(tab,'Contra_hr_P1-Ipsi_hl_P2 ~1','WithinDesign',within);
+ranovatbl = ranova(rm,'withinmodel','Tone*Hemi*Peak')
+
+
