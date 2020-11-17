@@ -874,13 +874,13 @@ count=0;
 for tone_categ=1:length(Categ)
     for hemi=1:length(Hemi)
         if hemi==1%right hemi
-            if tone_categ==1;%contra
+            if tone_categ==1%contra
                 tone_side=2;%left tone
             else%ipsi
                 tone_side=1;%right
             end
         else%left hemi
-             if tone_categ==1;%contra
+             if tone_categ==1%contra
                 tone_side=1;
             else%ipsi
                 tone_side=2;
@@ -1241,11 +1241,12 @@ legend(line,{'Hemi r', 'Hemi l'})
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Test={'Amp','Lat'}
-test=2
+test=1
 Peaks={'P1','N1','P2'};
 peak=2
 
 Peak_avg=0 %if true, take avg of window around peak
+avg_window=10;
 
 Partic=1:10;
 Tone_side={'RE','LE'};
@@ -1290,6 +1291,9 @@ for tone_categ=1:length(Categ)
                 timeoi=time>peak_windows(peak,1) & time<=peak_windows(peak,2);
                 if peak==2
                     [peak_amp,peak_i]=min(dataoi(timeoi));
+                    if Peak_avg
+                        peak_amp=mean(dataoi(peak_i+min(find(timeoi==1))-1-avg_window:peak_i+min(find(timeoi==1))-1+avg_window));
+                    end
                 else
                     [peak_amp,peak_i]=max(dataoi(timeoi));
                 end
