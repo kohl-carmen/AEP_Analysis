@@ -77,8 +77,7 @@ data_time=linspace(-201.000005, 793.699980,207);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOAD MODEL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-modeldata_dir='C:\Users\ckohl\hnn_out\data\';
-param_name='best_new_aep_r_contra';
+
 Model=struct();
 for hemi=1:length(Hemi)
     for tone_side=1:length(Tone_side)
@@ -90,9 +89,9 @@ for hemi=1:length(Hemi)
             end
         else %L
             if tone_side==1 %R
-                param_name='best_aep_l_contra2';
+                param_name='best_aep_l_contra2_smallvalues';
             else %L
-                param_name='best_aep_l_contra2_to_ipsi_scale_5ms';
+                param_name='best_aep_l_contra2_smallvalues_scale_to_ipsi_plus5';
             end
         end
         %mean
@@ -118,11 +117,16 @@ model_time=sim_time;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% plot base model 
+%% plot base model (contra)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+R =0; %if false, lef themi
 ylims=[-60 20];
 xlims=[0 250];
-param_name='best_new_aep_r_contra_scale_to_ipsi';
+if R
+    param_name='best_new_aep_r_contra';
+else
+    param_name='best_aep_l_contra2_smallvalues';
+end
 dpl=load(strcat(modeldata_dir,'\',param_name,'\dpl.txt'));
 sim_time=dpl(:,1);
 sim_trials=10;
@@ -154,7 +158,11 @@ end
 subplot(2,3,[1,2,4,5])
 plot(sim_time,dpl_agg,'k','Linewidth',2)
 %data
-plot(data_time, Data.AVE.LE.rig.*-1,'b','Linewidth',2)
+if R
+    plot(data_time, Data.AVE.LE.rig.*-1,'b','Linewidth',2)
+else
+    plot(data_time, Data.AVE.RE.lef.*-1,'b','Linewidth',2)
+end
 ylim(ylims)
 xlim(xlims)
 subplot(2,3,[3])
@@ -278,19 +286,71 @@ for hemi=1:length(Hemi)
         ylim([-60 20])
         xlim([0 250])
     end
-%     legend(line,Categ)
 end
 
 
+cd('C:\Users\ckohl\Desktop\')
+print 'c_to_i' -depsc -painters
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Contra-to-Ipsi Step Figure
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+yrange=[-20 60];
+R =0; %if false, lef themi
+ylims=[-60 20];
+xlims=[0 250];
+figure
+clf
+Steps={'Contra','Step', 'Ipsi'};
+Hemi={'R','L'}
+data_colours={[]./255,[]./255,[]./255;[]./255,[]./255,[]./255}
+for hemi=1:length(Hemi)
+    %get data
+    if hemi==1 %R
+        data_contra=Data.AVE.(strcat(Hemi{hemi},'E')).lef;
+        data_ipsi=Data.AVE.(strcat(Hemi{hemi},'E')).rig;
+    else %L
+        data_contra=Data.AVE.(strcat(Hemi{hemi},'E')).rig;
+        data_ipsi=Data.AVE.(strcat(Hemi{hemi},'E')).lef;
+    end   
+    for step=1:length(Steps)
+        subplot(length(Hemi),length(Steps),hemi*step)
+        hold on   
+        %plot data
+        plot(data,time, data_contra,'Color',[226 113 113]./255,'Linewidth',9)
+        plot(data,time, data_ipsi,'Color',[109 187 228]./255,'Linewidth',9)
+        
+        %load model
+        param_name=strcat(Hemi{hemi},'_',Steps{step});
+        dpl=load(strcat(modeldata_dir,'\',param_name,'\dpl.txt'));
+        sim_time=dpl(:,1);
+        dpl_agg=dpl(:,2);%aggregate
+        %plot model
+        plot(sim_time,dpl_agg,'k','Linewidth',2)
+    end
+end
+        
+dp
 
 
 
 
 cd('C:\Users\ckohl\Desktop\')
 print 'temp' -depsc -painters
-
-
 
 
 
