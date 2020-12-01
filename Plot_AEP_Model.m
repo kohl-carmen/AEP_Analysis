@@ -83,15 +83,15 @@ for hemi=1:length(Hemi)
     for tone_side=1:length(Tone_side)
         if hemi==1 %R
             if tone_side==1 %R
-                param_name='best_new_aep_r_contra_scale_to_ipsi_plus5';
+                param_name='R_Ipsi';
             else %L
-                param_name='best_new_aep_r_contra';
+                param_name='R_Contra';
             end
         else %L
             if tone_side==1 %R
-                param_name='best_aep_l_contra2_smallvalues';
+                param_name='L_Contra';
             else %L
-                param_name='best_aep_l_contra2_smallvalues_scale_to_ipsi_plus5';
+                param_name='L_Ipsi';
             end
         end
         %mean
@@ -123,10 +123,12 @@ R =0; %if false, lef themi
 ylims=[-60 20];
 xlims=[0 250];
 if R
-    param_name='best_new_aep_r_contra';
+    param_name='R_Contra';
 else
-    param_name='best_aep_l_contra2_smallvalues';
+    param_name='L_Contra';
 end
+%to plot the left contra model with reduced param changes:
+param_name='L_Contra_whatmatters';
 dpl=load(strcat(modeldata_dir,'\',param_name,'\dpl.txt'));
 sim_time=dpl(:,1);
 sim_trials=10;
@@ -155,6 +157,7 @@ for sim=1:sim_trials
     dpl_5_trials(:,sim)=temp(:,4);
     plot(sim_time,dpl_5_trials(:,sim),'Color',[.5 .5 .5],'Linewidth',1)
 end
+
 subplot(2,3,[1,2,4,5])
 plot(sim_time,dpl_agg,'k','Linewidth',2)
 %data
@@ -178,6 +181,65 @@ xlim(xlims)
 
 cd('C:\Users\ckohl\Desktop\')
 print 'temp' -depsc -painters
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+for alternative_hypo = 1:2
+    ylims=[-60 20];
+    xlims=[0 250];
+    %to plot the left contra model with reduced param changes:
+    if alternative_hypo==1
+        param_name='R_Contra_to_L_applying_ipsi';
+    else
+        param_name='R_Contra_to_Ipsi_applying_L';
+    end
+    dpl=load(strcat(modeldata_dir,'\',param_name,'\dpl.txt'));
+    sim_time=dpl(:,1);
+    sim_trials=10;
+    dpl_agg=dpl(:,2);%aggregate
+    dpl_5=dpl(:,4);
+    dpl_2=dpl(:,3);
+    figure
+    clf
+    hold on
+    plot(sim_time,dpl_agg,'k','Linewidth',2)
+    dpl_2_trials=[];
+    dpl_5_trials=[];
+    for sim=1:sim_trials
+        temp=load(strcat(modeldata_dir,'\',param_name,'\dpl_',num2str(sim-1),'.txt'));
+        dpl_agg_trials(:,sim)=temp(:,2);
+        plot(sim_time,dpl_agg_trials(:,sim),'Color',[.5 .5 .5],'Linewidth',1)
+    end
+    plot(sim_time,dpl_agg,'k','Linewidth',2)
+    %data
+    if alternative_hypo==1
+        lines(1)=plot(data_time, Data.AVE.LE.rig.*-1,'b','Linewidth',2);
+        lines(2)=plot(data_time, Data.AVE.RE.lef.*-1,'r','Linewidth',2);
+        label={'right-contra','left_contra'};
+    else
+        lines(1)=plot(data_time, Data.AVE.LE.rig.*-1,'b','Linewidth',2);
+        lines(2)=plot(data_time, Data.AVE.RE.rig.*-1,'r','Linewidth',2);
+        label={'right-contra','right_ipsi'};
+    end
+    legend(lines,label)
+    ylim(ylims)
+    xlim(xlims)
+    title(param_name)
+    
+    cd('C:\Users\ckohl\Desktop\')
+    if alternative_hypo==1
+        print 'temp1' -depsc -painters
+    else
+        print 'temp2' -depsc -painters
+    end
+end
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% plot model and/or data
