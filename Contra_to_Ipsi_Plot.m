@@ -120,7 +120,7 @@ end
 
 
 cd('C:\Users\ckohl\Desktop\')
-print 'temp' -depsc -painters
+print 'c_to_i' -depsc -painters
 
 
 
