@@ -8,8 +8,6 @@
 %       - ipsi:     2nd step: change input latencies
 % - puts eps file on Desktop
 
-
-
 clear
 set(gcf,'renderer','painters')
 
