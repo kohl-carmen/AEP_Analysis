@@ -156,5 +156,5 @@ for alternative_hypo = 1:2
     
     %% save
     cd('C:\Users\ckohl\Desktop\')
-    print 'alternative_hypos' -depsc -painters
+    print 'Figure5_Raw' -depsc -painters
 end
