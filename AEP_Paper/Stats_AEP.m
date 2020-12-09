@@ -144,6 +144,13 @@ for test =1:2 % pre and post
 
     % print results:
     fprintf('%s:\n',Test{test})
+    tabbi=table2array(tab);
+    fprintf('Descriptives: Mean(SD)\n')
+    fprintf('Left Hemi Contra:\t %2.2f (%2.2f)\n',mean(tabbi(:,2)),std(tabbi(:,2)))
+    fprintf('Left Hemi Ipsi:\t\t %2.2f (%2.2f)\n',mean(tabbi(:,4)),std(tabbi(:,4)))
+    fprintf('Right Hemi Contra:\t %2.2f (%2.2f)\n',mean(tabbi(:,1)),std(tabbi(:,1)))
+    fprintf('Right Hemi Ipsi:\t %2.2f (%2.2f)\n',mean(tabbi(:,3)),std(tabbi(:,3))) 
+    fprintf('ANOVA\n')
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)
@@ -554,6 +561,13 @@ for test=1:2 % amp and lat
 
     % print results:
     fprintf('%s %s:\n',Peaks{peak}, Test{test})
+    tabbi=table2array(tab);
+    fprintf('Descriptives: Mean(SD)\n')
+    fprintf('Left Hemi Contra:\t %2.2f (%2.2f)\n',mean(tabbi(:,2)),std(tabbi(:,2)))
+    fprintf('Left Hemi Ipsi:\t\t %2.2f (%2.2f)\n',mean(tabbi(:,4)),std(tabbi(:,4)))
+    fprintf('Right Hemi Contra:\t %2.2f (%2.2f)\n',mean(tabbi(:,1)),std(tabbi(:,1)))
+    fprintf('Right Hemi Ipsi:\t %2.2f (%2.2f)\n',mean(tabbi(:,3)),std(tabbi(:,3))) 
+    fprintf('ANOVA\n')
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)

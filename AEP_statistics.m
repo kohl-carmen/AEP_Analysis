@@ -1243,7 +1243,7 @@ legend(line,{'Hemi r', 'Hemi l'})
 Test={'Amp','Lat'}
 test=1
 Peaks={'P1','N1','P2'};
-peak=2
+peak=3
 
 Peak_avg=0 %if true, take avg of window around peak
 avg_window=10;
@@ -1299,12 +1299,12 @@ for tone_categ=1:length(Categ)
                 end
                 peak_lat=time(timeoi);
                 peak_lat=peak_lat(peak_i);
-%                 %plot
-%                 figure
-%                 plot(time,dataoi,'k')
-%                 hold on
-%                 plot(time(timeoi),dataoi(timeoi),'k','Linewidth',2)
-%                 plot(peak_lat,peak_amp,'ro','Linewidth',2)
+                %plot
+                figure
+                plot(time,dataoi,'k')
+                hold on
+                plot(time(timeoi),dataoi(timeoi),'k','Linewidth',2)
+                plot(peak_lat,peak_amp,'ro','Linewidth',2)
                 if test==1%amp
                     data(partic,count)=peak_amp;
                 else
