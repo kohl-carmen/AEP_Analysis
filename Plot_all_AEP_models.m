@@ -122,8 +122,8 @@ clf
 hold on
 Categ={'contra','ipsi'};
 %plot first 4
-model_colours={[.625 0 0],[0 0 .625]};
-data_colours={[229 115 115]./255, [66 165 245]./255}
+model_colours={[0 0 .625], [.625 0 0]};
+data_colours={[66 165 245]./255, [229 115 115]./255}
 for hemi=1:length(Hemi)
     if hemi==1
         subplot(1,2,2)
