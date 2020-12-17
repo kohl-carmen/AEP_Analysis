@@ -3,6 +3,7 @@
 % this creates Figure 1
 % - loads Tiina's MEG data and plots the AEP for right/left contra/ipsi
 % - plot includes standard error
+% - new: plots left vs right (contra) -> panel insert
 % - puts eps file on Desktop
 
 
@@ -127,7 +128,7 @@ yrange=[-20 60];
 figure
 clf
 Categ={'contra','ipsi'};
-colours={[226 113 113]./255,[109 187 228]./255};
+colours={[109 187 228]./255,[226 113 113]./255};
 linestyle='-';
 for hemi=1:length(Hemi)
     subplot(1,2,hemi)
@@ -196,4 +197,72 @@ cd('C:\Users\ckohl\Desktop\')
 print 'Figure_1_Raw' -depsc -painters
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Plot L v R Insert
+yrange=[-20 60];
+figure
+clf
+Categ={'contra','ipsi'};
+tone_categ=1;
+colours={[109 187 228]./255,[226 113 113]./255};
+linestyle='-';
+for hemi=1:length(Hemi)
+    count=0;
+    line=[];
+    count=count+1;
+    colour=colours{tone_categ};%[0 .312 .625];
+    if hemi==1%right hemi
+        linestyle='-';
+        if tone_categ==1;%contra
+            tone_side=2;%left tone
+        else%ipsi
+            tone_side=1;%right
+        end
+    else%left hemi
+        linestyle=':';
+         if tone_categ==1%contra
+            tone_side=1;
+        else%ipsi
+            tone_side=2;
+         end
+    end
 
+    set(gca, 'YDir','reverse');
+    if count==1
+        ylabel('Amplitude (nAm)');
+    end
+    xlabel('Time (ms)');
+    hold on
+    title(strcat('Hemi L v R'))
+    data_oi=[];
+    for partic=1:length(Partic)
+        data=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi});
+%             plot(time,data)
+        data_oi(partic,:)=data;
+    end
+    line(count)=plot(time,Data.AVE.(Tone_side{tone_side}).(Hemi{hemi}),'Color',colour,'Linestyle',linestyle,'Linewidth',2);
+        %make standard error
+        SE_upper=[];
+        SE_lower=[];
+        for i=1:length(time)
+            se=std(data_oi(:,i))./sqrt(length(data_oi(:,i)));
+            SE_upper(i)=mean(data_oi(:,i))+se;
+            SE_lower(i)=mean(data_oi(:,i))-se;
+        end
+        tempx=[time,fliplr(time)];
+        tempy=[SE_upper,fliplr(SE_lower)];
+        A=fill(tempx,tempy,'k');
+        A.EdgeColor='none';
+        A.FaceColor=colour;
+        A.FaceAlpha=.2;s
+        pause(.1)
+    ylim(yrange)
+    xlim([0 250])
+    legend(line,Categ)
+end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Save
+cd('C:\Users\ckohl\Desktop\')
+print 'Figure_1_Insert' -depsc -painters
