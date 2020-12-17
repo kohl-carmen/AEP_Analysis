@@ -1,6 +1,6 @@
 %% Plot AEP simulations for paper
 % Based on ../Plot_AEP_Model.m
-% This plots the dipoles for Figure 3
+% This plots the dipoles for Figure 3 and Figure S1
 % Figure 3 also requires a lot of manual tweaking in illustrator
 %       - tracing the input histograms from snip
 %       - save firing as eps from GUI and edit 
@@ -91,15 +91,19 @@ data_time=linspace(-201.000005, 793.699980,207);
 
 ylims=[-60 20];
 xlims=[0 250];
-for hemi = 1:length(Hemi)+1
+for hemi = 1:length(Hemi)+2
     % get model
     if hemi==1
         param_name='R_Contra';
     elseif hemi==2
         param_name='L_Contra';
-    else
+    elseif hemi==3
         param_name='L_Contra_whatmatters';
+    else
+        param_name='R_Contra_No_Smoothing';
+        ylims=[-120 50];
     end
+    
     dpl=load(strcat(modeldata_dir,'\',param_name,'\dpl.txt'));
     sim_time=dpl(:,1);
     sim_trials=10;
@@ -134,7 +138,7 @@ for hemi = 1:length(Hemi)+1
     subplot(2,3,[1,2,4,5])
     line(1)=plot(sim_time,dpl_agg,'k','Linewidth',2);
     %data
-    if hemi==1
+    if hemi==1 | hemi==4
         line(2)=plot(data_time, Data.AVE.LE.rig.*-1,'b','Linewidth',2);
     else
         line(2)=plot(data_time, Data.AVE.RE.lef.*-1,'b','Linewidth',2);
@@ -161,8 +165,10 @@ for hemi = 1:length(Hemi)+1
         print right_contra_model -depsc -painters
     elseif hemi==2
         print left_contra_model -depsc -painters
-    else
+    elseif hemi ==3
         print left_contra_reduced_model -depsc -painters
+    elseif hemi ==4
+        print right_contra_no_smoothing -depsc -painters
     end
 
 end
