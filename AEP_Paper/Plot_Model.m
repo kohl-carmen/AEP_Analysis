@@ -98,7 +98,7 @@ for hemi = 1:length(Hemi)+2
     elseif hemi==2
         param_name='L_Contra';
     elseif hemi==3
-        param_name='L_Contra_whatmatters';
+        param_name='L_Contra_Reduced_Model';
     else
         param_name='R_Contra_No_Smoothing';
         ylims=[-120 50];
