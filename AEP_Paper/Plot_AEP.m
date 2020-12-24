@@ -1,6 +1,6 @@
 %% Plot AEPs (empirical) for paper
 % Based on ../Plot_AEP.m
-% this creates Figure 1
+% this creates Figure 2 a,b
 % - loads Tiina's MEG data and plots the AEP for right/left contra/ipsi
 % - plot includes standard error
 % - new: plots left vs right (contra) -> panel insert
@@ -9,6 +9,8 @@
 
 clear
 
+file_dir = 'C:\Users\ckohl\Desktop\Current\AEP\Data\Tiina New Data\alternate_auditory_toCarmen_edited_for_import.xls';
+output_dir = 'C:\Users\ckohl\Desktop\';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Load MEG
 %% import tiina's data
@@ -21,7 +23,7 @@ opts.VariableNames = ["S1_LE_lef", "S2_LE_lef", "S3_LE_lef", "S4_LE_lef", "S5_LE
 opts.SelectedVariableNames = ["S1_LE_lef", "S2_LE_lef", "S3_LE_lef", "S4_LE_lef", "S5_LE_lef", "S6_LE_lef", "S7_LE_lef", "S8_LE_lef", "S9_LE_lef", "S10_LE_lef", "AVE_LE_lef", "S1_LE_rig", "S2_LE_rig", "S3_LE_rig", "S4_LE_rig", "S5_LE_rig", "S6_LE_rig", "S7_LE_rig", "S8_LE_rig", "S9_LE_rig", "S10_LE_rig", "AVE_LE_rig", "S1_RE_lef", "S2_RE_lef", "S3_RE_lef", "S4_RE_lef", "S5_RE_lef", "S6_RE_lef", "S7_RE_lef", "S8_RE_lef", "S9_RE_lef", "S10_RE_lef", "AVE_RE_lef", "S1_RE_rig", "S2_RE_rig", "S3_RE_rig", "S4_RE_rig", "S5_RE_rig", "S6_RE_rig", "S7_RE_rig", "S8_RE_rig", "S9_RE_rig", "S10_RE_rig", "AVE_RE_rig"];
 opts.VariableTypes = ["double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double"];
 % Import the data
-tbl = readtable("C:\Users\ckohl\Desktop\Current\AEP\Data\Tiina New Data\alternate_auditory_toCarmen_edited_for_import.xls", opts, "UseExcel", false);
+tbl = readtable(file_dir, opts, "UseExcel", false);
 
 %% Convert to output type
 Data.S1.LE.lef = tbl.S1_LE_lef;
@@ -182,10 +184,10 @@ for hemi=1:length(Hemi)
             pause(.1)
         ylim(yrange)
         xlim([0 250])
-        %latency lines
-        for peak=1:length(Peaks)
-            plot([mean(latencies.(Peaks{peak}).(Categ{tone_categ}).(Hemi{hemi})),mean(latencies.(Peaks{peak}).(Categ{tone_categ}).(Hemi{hemi}))], yrange,'Color',[colour(1:3),0.4],'Linestyle',linestyle,'Linewidth',2);
-        end
+%         %latency lines
+%         for peak=1:length(Peaks)
+%             plot([mean(latencies.(Peaks{peak}).(Categ{tone_categ}).(Hemi{hemi})),mean(latencies.(Peaks{peak}).(Categ{tone_categ}).(Hemi{hemi}))], yrange,'Color',[colour(1:3),0.4],'Linestyle',linestyle,'Linewidth',2);
+%         end
     end
     legend(line,Categ)
 end
@@ -193,7 +195,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Save
-cd('C:\Users\ckohl\Desktop\')
+cd(output_dir)
 print 'Figure_1_Raw' -depsc -painters
 
 
@@ -206,14 +208,14 @@ Categ={'contra','ipsi'};
 tone_categ=1;
 colours={[109 187 228]./255,[226 113 113]./255};
 linestyle='-';
+count=0;
+line=[];
 for hemi=1:length(Hemi)
-    count=0;
-    line=[];
     count=count+1;
     colour=colours{tone_categ};%[0 .312 .625];
     if hemi==1%right hemi
         linestyle='-';
-        if tone_categ==1;%contra
+        if tone_categ==1%contra
             tone_side=2;%left tone
         else%ipsi
             tone_side=1;%right
@@ -254,15 +256,15 @@ for hemi=1:length(Hemi)
         A=fill(tempx,tempy,'k');
         A.EdgeColor='none';
         A.FaceColor=colour;
-        A.FaceAlpha=.2;s
+        A.FaceAlpha=.2;
         pause(.1)
     ylim(yrange)
     xlim([0 250])
-    legend(line,Categ)
+    legend(line,Hemi)
 end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Save
-cd('C:\Users\ckohl\Desktop\')
+cd(output_dir)
 print 'Figure_1_Insert' -depsc -painters
