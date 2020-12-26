@@ -5,9 +5,11 @@
 % - 2 x 2 ANOVA (Tone(contra/ipsi) x Hemi (left/right))
 %   - Slope (pre and post N1)
 %   - N1 amplitude and latency
+%   - reports output in cmd
 % plotting available but commented out
 
 clear
+modeldata_dir='C:\Users\ckohl\hnn_out\data\';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Load models
@@ -16,7 +18,6 @@ Partic=1:10;
 Tone_side={'RE','LE'};
 Hemi={'rig','lef'};
 Categ={'contra','ipsi'};
-modeldata_dir='C:\Users\ckohl\hnn_out\data\';
 Data=struct();
 for hemi=1:length(Hemi)
     for tone_side=1:length(Tone_side)
@@ -862,9 +863,7 @@ end
 %     xlim([0 200])
 % end
 % legend(line,{'Hemi r', 'Hemi l'})
-% 
-% 
-% 
+
 
 
 

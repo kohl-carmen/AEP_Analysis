@@ -1,12 +1,16 @@
 %% Plot AEPs (empirical) for paper
 % Based on ../AEP_Stats_narrow.m
+% Runs stats on AEPs - reported in Table 1
 % - loads Tiina's MEG data 
 % - 2 x 2 ANOVA (Tone(contra/ipsi) x Hemi (left/right))
 %   - Slope (pre and post N1)
 %   - N1 amplitude and latency
+%   - prints output in cmd
 % plotting available but commented out
 
 clear
+file_dir = 'C:\Users\ckohl\Desktop\Current\AEP\Data\Tiina New Data\alternate_auditory_toCarmen_edited_for_import.xls';
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Load data
 
@@ -19,7 +23,7 @@ opts.VariableNames = ["S1_LE_lef", "S2_LE_lef", "S3_LE_lef", "S4_LE_lef", "S5_LE
 opts.SelectedVariableNames = ["S1_LE_lef", "S2_LE_lef", "S3_LE_lef", "S4_LE_lef", "S5_LE_lef", "S6_LE_lef", "S7_LE_lef", "S8_LE_lef", "S9_LE_lef", "S10_LE_lef", "AVE_LE_lef", "S1_LE_rig", "S2_LE_rig", "S3_LE_rig", "S4_LE_rig", "S5_LE_rig", "S6_LE_rig", "S7_LE_rig", "S8_LE_rig", "S9_LE_rig", "S10_LE_rig", "AVE_LE_rig", "S1_RE_lef", "S2_RE_lef", "S3_RE_lef", "S4_RE_lef", "S5_RE_lef", "S6_RE_lef", "S7_RE_lef", "S8_RE_lef", "S9_RE_lef", "S10_RE_lef", "AVE_RE_lef", "S1_RE_rig", "S2_RE_rig", "S3_RE_rig", "S4_RE_rig", "S5_RE_rig", "S6_RE_rig", "S7_RE_rig", "S8_RE_rig", "S9_RE_rig", "S10_RE_rig", "AVE_RE_rig"];
 opts.VariableTypes = ["double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double"];
 % Import the data
-tbl = readtable("C:\Users\ckohl\Desktop\Current\AEP\Data\Tiina New Data\alternate_auditory_toCarmen_edited_for_import.xls", opts, "UseExcel", false);
+tbl = readtable(file_dir, opts, "UseExcel", false);
 
 %% Convert to output type
 Data.S1.LE.lef = tbl.S1_LE_lef;
@@ -580,7 +584,7 @@ end
 % Main1_F=(ranovatbl(3,4));
 % Main2_F=(ranovatbl(5,4));
 % Interact_F=(ranovatbl(7,4));
-
+% 
 % %% PLOT
 % 
 % yrange=[-20 60];
@@ -879,6 +883,4 @@ end
 %     xlim([0 200])
 % end
 % legend(line,{'Hemi r', 'Hemi l'})
-% 
-% 
-% 
+
