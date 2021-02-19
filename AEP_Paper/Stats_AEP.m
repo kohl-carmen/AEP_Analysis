@@ -26,50 +26,50 @@ opts.VariableTypes = ["double", "double", "double", "double", "double", "double"
 tbl = readtable(file_dir, opts, "UseExcel", false);
 
 %% Convert to output type
-Data.S1.LE.lef = tbl.S1_LE_lef;
-Data.S2.LE.lef = tbl.S2_LE_lef;
-Data.S3.LE.lef = tbl.S3_LE_lef;
-Data.S4.LE.lef = tbl.S4_LE_lef;
-Data.S5.LE.lef = tbl.S5_LE_lef;
-Data.S6.LE.lef = tbl.S6_LE_lef;
-Data.S7.LE.lef = tbl.S7_LE_lef;
-Data.S8.LE.lef = tbl.S8_LE_lef;
-Data.S9.LE.lef = tbl.S9_LE_lef;
-Data.S10.LE.lef = tbl.S10_LE_lef;
-Data.AVE.LE.lef = tbl.AVE_LE_lef;
-Data.S1.LE.rig = tbl.S1_LE_rig;
-Data.S2.LE.rig = tbl.S2_LE_rig;
-Data.S3.LE.rig = tbl.S3_LE_rig;
-Data.S4.LE.rig = tbl.S4_LE_rig;
-Data.S5.LE.rig = tbl.S5_LE_rig;
-Data.S6.LE.rig = tbl.S6_LE_rig;
-Data.S7.LE.rig = tbl.S7_LE_rig;
-Data.S8.LE.rig = tbl.S8_LE_rig;
-Data.S9.LE.rig = tbl.S9_LE_rig;
-Data.S10.LE.rig = tbl.S10_LE_rig;
-Data.AVE.LE.rig = tbl.AVE_LE_rig;
-Data.S1.RE.lef = tbl.S1_RE_lef;
-Data.S2.RE.lef = tbl.S2_RE_lef;
-Data.S3.RE.lef = tbl.S3_RE_lef;
-Data.S4.RE.lef = tbl.S4_RE_lef;
-Data.S5.RE.lef = tbl.S5_RE_lef;
-Data.S6.RE.lef = tbl.S6_RE_lef;
-Data.S7.RE.lef = tbl.S7_RE_lef;
-Data.S8.RE.lef = tbl.S8_RE_lef;
-Data.S9.RE.lef = tbl.S9_RE_lef;
-Data.S10.RE.lef = tbl.S10_RE_lef;
-Data.AVE.RE.lef = tbl.AVE_RE_lef;
-Data.S1.RE.rig = tbl.S1_RE_rig;
-Data.S2.RE.rig = tbl.S2_RE_rig;
-Data.S3.RE.rig = tbl.S3_RE_rig;
-Data.S4.RE.rig = tbl.S4_RE_rig;
-Data.S5.RE.rig = tbl.S5_RE_rig;
-Data.S6.RE.rig = tbl.S6_RE_rig;
-Data.S7.RE.rig = tbl.S7_RE_rig;
-Data.S8.RE.rig = tbl.S8_RE_rig;
-Data.S9.RE.rig = tbl.S9_RE_rig;
-Data.S10.RE.rig = tbl.S10_RE_rig;
-Data.AVE.RE.rig = tbl.AVE_RE_rig;
+Data.S1.LE.lef = tbl.S1_LE_lef.*-1;
+Data.S2.LE.lef = tbl.S2_LE_lef.*-1;
+Data.S3.LE.lef = tbl.S3_LE_lef.*-1;
+Data.S4.LE.lef = tbl.S4_LE_lef.*-1;
+Data.S5.LE.lef = tbl.S5_LE_lef.*-1;
+Data.S6.LE.lef = tbl.S6_LE_lef.*-1;
+Data.S7.LE.lef = tbl.S7_LE_lef.*-1;
+Data.S8.LE.lef = tbl.S8_LE_lef.*-1;
+Data.S9.LE.lef = tbl.S9_LE_lef.*-1;
+Data.S10.LE.lef = tbl.S10_LE_lef.*-1;
+Data.AVE.LE.lef = tbl.AVE_LE_lef.*-1;
+Data.S1.LE.rig = tbl.S1_LE_rig.*-1;
+Data.S2.LE.rig = tbl.S2_LE_rig.*-1;
+Data.S3.LE.rig = tbl.S3_LE_rig.*-1;
+Data.S4.LE.rig = tbl.S4_LE_rig.*-1;
+Data.S5.LE.rig = tbl.S5_LE_rig.*-1;
+Data.S6.LE.rig = tbl.S6_LE_rig.*-1;
+Data.S7.LE.rig = tbl.S7_LE_rig.*-1;
+Data.S8.LE.rig = tbl.S8_LE_rig.*-1;
+Data.S9.LE.rig = tbl.S9_LE_rig.*-1;
+Data.S10.LE.rig = tbl.S10_LE_rig.*-1;
+Data.AVE.LE.rig = tbl.AVE_LE_rig.*-1;
+Data.S1.RE.lef = tbl.S1_RE_lef.*-1;
+Data.S2.RE.lef = tbl.S2_RE_lef.*-1;
+Data.S3.RE.lef = tbl.S3_RE_lef.*-1;
+Data.S4.RE.lef = tbl.S4_RE_lef.*-1;
+Data.S5.RE.lef = tbl.S5_RE_lef.*-1;
+Data.S6.RE.lef = tbl.S6_RE_lef.*-1;
+Data.S7.RE.lef = tbl.S7_RE_lef.*-1;
+Data.S8.RE.lef = tbl.S8_RE_lef.*-1;
+Data.S9.RE.lef = tbl.S9_RE_lef.*-1;
+Data.S10.RE.lef = tbl.S10_RE_lef.*-1;
+Data.AVE.RE.lef = tbl.AVE_RE_lef.*-1;
+Data.S1.RE.rig = tbl.S1_RE_rig.*-1;
+Data.S2.RE.rig = tbl.S2_RE_rig.*-1;
+Data.S3.RE.rig = tbl.S3_RE_rig.*-1;
+Data.S4.RE.rig = tbl.S4_RE_rig.*-1;
+Data.S5.RE.rig = tbl.S5_RE_rig.*-1;
+Data.S6.RE.rig = tbl.S6_RE_rig.*-1;
+Data.S7.RE.rig = tbl.S7_RE_rig.*-1;
+Data.S8.RE.rig = tbl.S8_RE_rig.*-1;
+Data.S9.RE.rig = tbl.S9_RE_rig.*-1;
+Data.S10.RE.rig = tbl.S10_RE_rig.*-1;
+Data.AVE.RE.rig = tbl.AVE_RE_rig.*-1;
 clear opts tbl
 
 
@@ -158,6 +158,9 @@ for test =1:2 % pre and post
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)
+    cd('C:\Users\ckohl\Desktop\Current\AEP\')
+    
+    save( strcat( Test{test}),'tab')
 end
 
 %% plotting not in test loop
@@ -525,7 +528,7 @@ for test=1:2 % amp and lat
             count=count+1;       
             for partic=1:length(Partic)
                     % detect peak: P1
-                    dataoi=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi}).*(-1);
+                    dataoi=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi});
                     timeoi=time>peak_windows(peak,1) & time<=peak_windows(peak,2);
                     if peak==2
                         [peak_amp,peak_i]=min(dataoi(timeoi));
@@ -575,6 +578,8 @@ for test=1:2 % amp and lat
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)
+    cd('C:\Users\ckohl\Desktop\Current\AEP\')
+    save( strcat(Peaks{peak}, Test{test}),'tab')
 end
 
 %% plotting not in loop

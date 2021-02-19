@@ -143,6 +143,9 @@ for test=1:2 %pre and post
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)
+    cd('C:\Users\ckohl\Desktop\Current\AEP\')
+    save( strcat(Test{test},'_HNN'),'tab')
+
 end
 
 %% plotting not in loop
@@ -503,10 +506,10 @@ for test=1:2%am and lat
             count=count+1;       
             for partic=1:length(Partic)
                     % detect peak: P1
-                    dataoi=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi}).*(-1);
+                    dataoi=Data.(strcat('S',num2str(partic))).(Tone_side{tone_side}).(Hemi{hemi});
                     timeoi=time>peak_windows(peak,1) & time<=peak_windows(peak,2);
                     if peak==2
-                        [peak_amp,peak_i]=max(dataoi(timeoi));
+                        [peak_amp,peak_i]=min(dataoi(timeoi));
                         if Peak_avg
                             peak_amp=mean(dataoi(peak_i+max(find(timeoi==1))-1-avg_window:peak_i+max(find(timeoi==1))-1+avg_window));
                         end
@@ -552,6 +555,8 @@ for test=1:2%am and lat
     fprintf('Tone:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(3,2),ranovatbl(4,2),ranovatbl(3,4),ranovatbl(3,5),eta_tone)
     fprintf('Hemi:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n',ranovatbl(5,2),ranovatbl(6,2),ranovatbl(5,4),ranovatbl(5,5),eta_hemi)
     fprintf('Inter:\tF(%d,%d) = %5.2f p = %5.3f, n = %2.2f\n\n',ranovatbl(7,2),ranovatbl(8,2),ranovatbl(7,4),ranovatbl(7,5),eta_int)
+    cd('C:\Users\ckohl\Desktop\Current\AEP\')
+    save( strcat(Peaks{peak}, Test{test},'_HNN'),'tab')
 end
 
 
